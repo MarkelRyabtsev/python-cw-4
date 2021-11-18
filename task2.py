@@ -17,7 +17,7 @@ class Task2:
         print(f'------------------------- Задача {self.task_number} -------------------------')
         print('В массиве из n элементов найти сумму элементов массива, среднее арифметическое чисел,'
               '\n входящих в массив, произведение положительных элементов')
-        n = helper.set_natural_number('Введите размерность массива n', range(1, 10))
+        n = helper.set_natural_number('Введите размерность массива n', range(1, 11))
         random_array = helper.set_random_array(n, range(-100, 100))
         print(random_array)
         print('----------------------------------------------------------')
@@ -34,15 +34,15 @@ class Task2:
     def __get_sum(array: []) -> int:
         try:
             return sum(array)
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __get_average_value(array: []) -> float:
         try:
             return sum(array) / len(array)
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __get_product_of_positive_numbers(array: []) -> int:
@@ -52,5 +52,5 @@ class Task2:
             for value in positive_values:
                 product *= value
             return product
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')

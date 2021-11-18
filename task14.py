@@ -1,3 +1,5 @@
+import copy
+
 from helper import Helper
 
 
@@ -15,27 +17,27 @@ class Task14:
     def start_task(self):
         helper = Helper()
         print(f'------------------------- Задача {self.task_number} -------------------------')
-        print('Вычислить приближенно значение бесконечной суммы:'
-              '\n1/1*3 + 1/2*4 + 1/3*5 + ... = 3/4')
-        epc = helper.set_degree_of_accuracy('Введите степень точности')
+        print('В массиве поменять местами элементы, стоящие на нечетных местах,'
+              '\nс элементами, стоящими на четных местах')
+        n = helper.set_natural_number('Введите размерность массива n', range(1, 11))
+        random_array = helper.set_random_array(n, range(-n, n))
         print('----------------------------------------------------------')
-        self.__calculate(epc, helper)
+        print(f'Исходный массив: {random_array}')
+        print(f'После перестановки: {self.__get_swapped_array(random_array, helper)}')
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
     @staticmethod
-    def __calculate(epc: float, helper: Helper):
-        exact_value = 3 / 4
-        epc_str = helper.float_to_str(epc)
-        count_symbols = len(epc_str.split(".")[1])
-        n1 = 1
-        n2 = 3
-        total_sum = 0.0
-        while True:
-            a = 1 / (n1 * n2)
-            if abs(a) < epc:
-                break
-            total_sum += a
-            n1 += 1
-            n2 += 1
-        helper.show_degree_of_accuracy_result(exact_value, round(total_sum, count_symbols), epc_str)
+    def __get_swapped_array(array: [], helper: Helper) -> []:
+        try:
+            new_array = copy.deepcopy(array)
+            for i in range(0, len(new_array), 2):
+                if i == (len(new_array) - 1):
+                    break
+                new_array[i], new_array[i + 1] = helper.swap_items(
+                    new_array[i],
+                    new_array[i + 1]
+                )
+            return new_array
+        except Exception as e:
+            print(f'Ошибка: {e}')

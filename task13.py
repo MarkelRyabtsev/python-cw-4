@@ -1,5 +1,4 @@
-import math
-from helper import Helper, Range
+from helper import Helper
 
 
 class Task13:
@@ -15,41 +14,35 @@ class Task13:
 
     def start_task(self):
         helper = Helper()
-        print('Вычислить y = (sin^2(z+a)^3)/(t√e^(a+2q)). Параметр z изменяется от z=zн=0.5 до z=zк=1'
-              '\nс шагом h=0.1. a, q, t – константы. Использовать цикл while или repeat')
-        a = helper.set_real_number('a')
-        q = helper.set_real_number('q')
-        t = helper.set_real_number('t')
-        z_start = 0.5
-        z_stop = 1.0
-        z_step = 0.1
-        z_range = Range(
-            z_start,
-            z_stop,
-            z_step
-        )
+        print('Найти в массиве наибольшее число повторений элементов.'
+              '\nВывести значение элемента и количество его повторений')
+        n = helper.set_natural_number('Введите размерность массива n', range(1, 11))
+        random_array = helper.set_random_array(n, range(-n, n))
         print('----------------------------------------------------------')
-        values = self.__get_dict_values(z_range, a, q, t)
-        for value in values:
-            print(f'При z = {value}: y = {values[value]}')
+        print(random_array)
+        self.__show_duplicates(random_array)
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
-    def __get_dict_values(self, z_range: Range, a: float, q: float, t: float) -> dict[float, float]:
-        try:
-            dict_values = dict()
-            z = z_range.start
-            while z <= z_range.stop:
-                dict_values[round(z, 1)] = self.__get_w(z, a, q, t)
-                z += z_range.step
-            return dict_values
-        except:
-            print('Ошибка входных данных')
-            return dict()
-
     @staticmethod
-    def __get_w(z: float, a: float, q: float, t: float) -> float:
+    def __show_duplicates(array: []):
         try:
-            return round((math.sin(pow(z + a, 3)) ** 2) / (t * math.sqrt(math.pow(math.e, a + 2 * q))), 4)
-        except:
-            raise Exception
+            duplicates = dict()
+            for i in range(0, len(array)):
+                count = 1
+                for j in range(1, len(array)):
+                    if array[j] == array[i] and (i != j or i == len(array) - 1):
+                        count += 1
+                        duplicates[array[j]] = count
+            if len(duplicates) != 0:
+                sorted_dict = dict(sorted(duplicates.items(), key=lambda item: item[1], reverse=True))
+                first_key = next(iter(sorted_dict))
+                max_count = sorted_dict[first_key]
+                dict_with_max_duplicates = {key: value for key, value in sorted_dict.items() if value == max_count}
+                print(f'Наибольшее число повторений у:')
+                for duplicate in dict_with_max_duplicates:
+                    print(f'[{duplicate}]: {dict_with_max_duplicates[duplicate]}')
+            else:
+                print('Повторений нет.')
+        except Exception as e:
+            print(f'Ошибка: {e}')

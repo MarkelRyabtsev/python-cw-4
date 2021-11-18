@@ -1,5 +1,6 @@
-import math
-from helper import Helper, Range
+import copy
+
+from helper import Helper
 
 
 class Task10:
@@ -16,41 +17,44 @@ class Task10:
     def start_task(self):
         helper = Helper()
         print(f'------------------------- Задача {self.task_number} -------------------------')
-        print('Вычислить t = (b^2 + √|q|)/(cos^2(x) + b*ln(y)) Параметр x изменяется от х=хн=1 до х=хк=5'
-              '\nс шагом h=1. b, q, y – константы. Использовать цикл while или repeat')
-        b = helper.set_real_number('b')
-        q = helper.set_real_number('q')
-        y = helper.set_real_number('y')
-        x_start = 1
-        x_stop = 5
-        x_step = 1
-        x_range = Range(
-            x_start,
-            x_stop,
-            x_step
-        )
+        print('Если в массиве присутствуют отрицательные элементы, заменить их значения средним арифметическим массива.'
+              '\nПодсчитать и вывести количество совпадающих элементов массива')
+        n = helper.set_natural_number('Введите размерность массива n', range(1, 11))
+        random_array = helper.set_random_array(n, range(-n, n))
         print('----------------------------------------------------------')
-        values = self.__get_dict_values(x_range, b, q, y)
-        for value in values:
-            print(f'При x = {value}: t = {values[value]}')
+        print(f'Исходный массив: {random_array}')
+        print(f'После замены отрицательных эл.: {self.__get_least_distant_element(random_array)}')
+        self.__show_duplicates(random_array)
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
-    def __get_dict_values(self, x_range: Range, b: float, q: float, y: float) -> dict[float, float]:
+    @staticmethod
+    def __get_least_distant_element(array: []) -> []:
         try:
-            dict_values = dict()
-            x = x_range.start
-            while x <= x_range.stop:
-                dict_values[round(x, 1)] = self.__get_w(x, b, q, y)
-                x += x_range.step
-            return dict_values
-        except:
-            print('Ошибка входных данных')
-            return dict()
+            average = round(sum(array) / len(array), 2)
+            new_array = copy.deepcopy(array)
+            for i in range(0, len(new_array)):
+                if new_array[i] < 0:
+                    new_array[i] = average
+            return new_array
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
-    def __get_w(x: float, b: float, q: float, y: float) -> float:
+    def __show_duplicates(array: []):
         try:
-            return round((b ** 2 + math.sqrt(abs(q))) / (math.cos(x) ** 2 + b * math.log(y, math.e)), 4)
-        except:
-            raise Exception
+            duplicates = dict()
+            for i in range(0, len(array)):
+                count = 1
+                for j in range(1, len(array)):
+                    if array[j] == array[i] and i != j:
+                        count += 1
+                        duplicates[array[j]] = count
+            if len(duplicates) != 0:
+                print(f'Количество совпадающих элементов:')
+                for key in duplicates.keys():
+                    print(f'{key}: {duplicates[key]}')
+            else:
+                print('Повторений нет.')
+        except Exception as e:
+            print(f'Ошибка: {e}')

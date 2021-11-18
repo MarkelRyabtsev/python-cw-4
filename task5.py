@@ -28,32 +28,38 @@ class Task5:
 
     @staticmethod
     def __calculate_variant_a(matrix: [[]]):
-        count = 0
-        for i in range(0, len(matrix)):
-            for j in range(0, len(matrix[i])):
-                if j >= i:
-                    print('[X]', end='')
-                    if matrix[i][j] == 0:
-                        count += 1
+        try:
+            count = 0
+            for i in range(0, len(matrix)):
+                for j in range(0, len(matrix[i])):
+                    if j >= i:
+                        print('[X]', end='')
+                        if matrix[i][j] == 0:
+                            count += 1
+                    else:
+                        print('[ ]', end='')
+                if i == len(matrix) - 1:
+                    print(f' Количество нулевых элементов = {count}\n')
                 else:
-                    print('[ ]', end='')
-            if i == len(matrix) - 1:
-                print(f' Количество нулевых элементов = {count}\n')
-            else:
-                print('')
+                    print('')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __calculate_variant_b(matrix: [[]]):
-        count = 0
-        for i in range(0, len(matrix)):
-            for j in range(0, len(matrix[i])):
-                if j <= i:
-                    print('[X]', end='')
-                    if matrix[i][j] == 0:
-                        count += 1
+        try:
+            count = 0
+            for i in range(0, len(matrix)):
+                for j in range(0, len(matrix[i])):
+                    if j <= i:
+                        print('[X]', end='')
+                        if matrix[i][j] == 0:
+                            count += 1
+                    else:
+                        print('[ ]', end='')
+                if i == len(matrix) - 1:
+                    print(f' Количество нулевых элементов = {count}\n')
                 else:
-                    print('[ ]', end='')
-            if i == len(matrix) - 1:
-                print(f' Количество нулевых элементов = {count}\n')
-            else:
-                print('')
+                    print('')
+        except Exception as e:
+            print(f'Ошибка: {e}')

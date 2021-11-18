@@ -1,3 +1,5 @@
+import copy
+
 from helper import Helper
 
 
@@ -15,30 +17,28 @@ class Task12:
     def start_task(self):
         helper = Helper()
         print(f'------------------------- Задача {self.task_number} -------------------------')
-        print('На промежутке от 1 до M найти все числа Армстронга. Натуральное число из n цифр называется'
-              '\nчислом Армстронга, если сумма его цифр, возведенных в n-ю степень, равна самому числу')
-        m = helper.set_natural_number('M')
+        print('Расположить элементы массива в обратном порядке (первый элемент меняется с последним,'
+              '\nвторой - с предпоследним и т.д. до середины;'
+              '\nесли массив содержит нечетное количество элементов, то средний остается без изменения).')
+        n = helper.set_natural_number('Введите размерность массива n', range(1, 11))
+        random_array = helper.set_random_array(n, range(-n, n))
         print('----------------------------------------------------------')
-        number_list = self.__get_armstrong_numbers(m)
-        self.__print_numbers(number_list, m)
+        print(f'Исходный массив: {random_array}')
+        print(f'После перестановки: {self.__get_changed_array(random_array, helper)}')
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
     @staticmethod
-    def __print_numbers(number_list: list[int], m: int):
-        if len(number_list) > 0:
-            print(f'Числа Армстронга в диапозоне [1, {m}]:'
-                  f'\n{number_list}')
-
-    @staticmethod
-    def __get_armstrong_numbers(m: int) -> list[int]:
-        number_list = []
-        for number in range(1, m + 1, 1):
-            checked_sum = sum(
-                map(
-                    lambda x: int(x) ** len(str(number)), str(number)
+    def __get_changed_array(array: [], helper: Helper) -> []:
+        try:
+            new_array = copy.deepcopy(array)
+            for i in range(0, len(new_array)):
+                new_array[i], new_array[len(new_array) - 1 - i] = helper.swap_items(
+                    new_array[i],
+                    new_array[len(new_array) - 1 - i]
                 )
-            )
-            if checked_sum == number:
-                number_list.append(number)
-        return number_list
+                if i == round((len(new_array) - 1) / 2):
+                    break
+            return new_array
+        except Exception as e:
+            print(f'Ошибка: {e}')

@@ -1,5 +1,4 @@
-import math
-from helper import Helper, Range
+from helper import Helper
 
 
 class Task16:
@@ -16,41 +15,26 @@ class Task16:
     def start_task(self):
         helper = Helper()
         print(f'------------------------- Задача {self.task_number} -------------------------')
-        print('Вычислить z = (3*x^2 - √cos(q^3))/(ln(q + a)t). Параметр x изменяется от x=xн=0.2 до x=xк=0.6'
-              '\nс шагом h=0.1. a, q, t – константы. Использовать цикл while или repeat')
-        a = helper.set_real_number('a')
-        q = helper.set_real_number('q')
-        t = helper.set_real_number('t')
-        x_start = 0.2
-        x_stop = 0.6
-        x_step = 0.1
-        x_range = Range(
-            x_start,
-            x_stop,
-            x_step
-        )
+        print('Дан двумерный массив. В каждой строке все его положительные элементы переписать (сохраняя порядок)'
+              '\nв начало строки, а отрицательные элементы - в конец массива. Дополнительный массив не использовать')
+        m = helper.set_natural_number('m (строка)')
+        n = helper.set_natural_number('n (столбец)')
+        random_matrix = helper.set_random_matrix(m, n, range(-100, 100))
+        helper.print_matrix(random_matrix)
         print('----------------------------------------------------------')
-        values = self.__get_dict_values(x_range, a, q, t)
-        for value in values:
-            print(f'При x = {value}: z = {values[value]}')
+        print('После сортировки:')
+        helper.print_matrix(self.__get_sorted_matrix(random_matrix))
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
-    def __get_dict_values(self, x_range: Range, a: float, q: float, t: float) -> dict[float, float]:
-        try:
-            dict_values = dict()
-            x = x_range.start
-            while x <= x_range.stop:
-                dict_values[round(x, 1)] = self.__get_z(x, a, q, t)
-                x += x_range.step
-            return dict_values
-        except:
-            print('Ошибка входных данных')
-            return dict()
-
     @staticmethod
-    def __get_z(x: float, a: float, q: float, t: float) -> float:
+    def __get_sorted_matrix(matrix: [[]]) -> [[]]:
         try:
-            return round((3 * (x ** 2) - math.sqrt(math.cos(q ** 3))) / (math.log((q + a) * t, math.e)), 4)
-        except:
-            raise Exception
+            for row in matrix:
+                if all(item < 0 for item in row):
+                    continue
+                if any(item < 0 for item in row):
+                    row.sort(key=lambda x: x < 0)
+            return matrix
+        except Exception as e:
+            print(f'Ошибка: {e}')

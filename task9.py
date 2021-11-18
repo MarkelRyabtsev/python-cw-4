@@ -1,4 +1,3 @@
-import math
 from helper import Helper
 
 
@@ -16,29 +15,36 @@ class Task9:
     def start_task(self):
         helper = Helper()
         print(f'------------------------- Задача {self.task_number} -------------------------')
-        print('Дано натуральное n. Вычиcлить Пi=1 (2 + 1/i!)')
-        n = helper.set_natural_number('n')
+        print('Дано вещественное число r и массив размера n.'
+              '\nНайти элемент массива, который наиболее и наименее близок к данному числу')
+        n = helper.set_natural_number('Введите размерность массива n', range(1, 11))
+        r = helper.set_natural_number('Число для поиска r', range(-n, n), True)
+        random_array = helper.set_random_array(n, range(-n, n), True)
+        print(random_array)
         print('----------------------------------------------------------')
-        self.__print_formula(n)
-        print(f' = {self.__calculate(n)}')
+        print(f'Наиболее близок к {r} : {self.__get_least_distant_element(random_array, r)}')
+        print(f'Наименее близок к {r} : {self.__get_most_distant_element(random_array, r)}')
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
     @staticmethod
-    def __print_formula(n: int):
-        count = 1
-        while count <= n:
-            print(f'(2 + 1/{count}!)', end='')
-            count += 1
-            if count <= n:
-                print(' * ', end='')
+    def __get_least_distant_element(array: [], r: int) -> int:
+        try:
+            element = array[0]
+            for i in array:
+                if abs(i - r) < abs(element - r):
+                    element = i
+            return element
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
-    def __calculate(n: int) -> float:
-        value = 1
-        count = 1
-        while count <= n:
-            value *= 2 + (1 / math.factorial(count))
-            count += 1
-
-        return round(value, 2)
+    def __get_most_distant_element(array: [], r: int) -> int:
+        try:
+            element = array[0]
+            for i in array:
+                if abs(i - r) > abs(element - r):
+                    element = i
+            return element
+        except Exception as e:
+            print(f'Ошибка: {e}')

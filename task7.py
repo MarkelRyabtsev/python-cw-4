@@ -18,15 +18,15 @@ class Task7:
         print('Дана последовательность   100 различных целых чисел. Найти сумму чисел этой последовательности,'
               '\nрасположенных между максимальным и минимальным числами (в сумму можно включить и сами эти два числа)')
         random_array = helper.set_random_array(100, range(-100, 100), True)
-        print(random_array)
+        helper.print_long_array(random_array)
         print('----------------------------------------------------------')
-        sum_between_max_and_min = self.__get_sum_between_max_and_min(random_array)
+        sum_between_max_and_min = self.__get_sum_between_max_and_min(random_array, helper)
         print(f'Сумма элементов между макс. и мин. значениями = {sum_between_max_and_min}')
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
     @staticmethod
-    def __get_sum_between_max_and_min(array: []) -> int:
+    def __get_sum_between_max_and_min(array: [], helper: Helper) -> int:
         try:
             sum_between_max_and_min = 0
             trimmed_array = []
@@ -46,7 +46,7 @@ class Task7:
                     if max_index <= i <= min_index:
                         trimmed_array.append(array[i])
                         sum_between_max_and_min += array[i]
-            print(trimmed_array)
+            helper.print_long_array(trimmed_array)
             return sum_between_max_and_min
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')

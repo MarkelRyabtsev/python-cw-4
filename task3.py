@@ -32,5 +32,5 @@ class Task3:
             for row in matrix:
                 vector.append(round(sum(row) / len(row), 2))
             return vector
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')

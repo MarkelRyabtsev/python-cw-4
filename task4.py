@@ -29,64 +29,76 @@ class Task4:
 
     @staticmethod
     def __calculate_variant_a(matrix: [[]]):
-        max_value = None
-        for i in range(0, len(matrix)):
-            for j in range(0, len(matrix[i])):
-                if j >= i:
-                    print('[X]', end='')
-                    if max_value is None or matrix[i][j] > max_value:
-                        max_value = matrix[i][j]
+        try:
+            max_value = None
+            for i in range(0, len(matrix)):
+                for j in range(0, len(matrix[i])):
+                    if j >= i:
+                        print('[X]', end='')
+                        if max_value is None or matrix[i][j] > max_value:
+                            max_value = matrix[i][j]
+                    else:
+                        print('[ ]', end='')
+                if i == len(matrix) - 1:
+                    print(f' Максимальное значение в области = {max_value}\n')
                 else:
-                    print('[ ]', end='')
-            if i == len(matrix) - 1:
-                print(f' Максимальное значение в области = {max_value}\n')
-            else:
-                print('')
+                    print('')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __calculate_variant_b(matrix: [[]]):
-        max_value = None
-        for i in range(0, len(matrix)):
-            for j in range(0, len(matrix[i])):
-                if j <= i:
-                    print('[X]', end='')
-                    if max_value is None or matrix[i][j] > max_value:
-                        max_value = matrix[i][j]
+        try:
+            max_value = None
+            for i in range(0, len(matrix)):
+                for j in range(0, len(matrix[i])):
+                    if j <= i:
+                        print('[X]', end='')
+                        if max_value is None or matrix[i][j] > max_value:
+                            max_value = matrix[i][j]
+                    else:
+                        print('[ ]', end='')
+                if i == len(matrix) - 1:
+                    print(f' Максимальное значение в области = {max_value}\n')
                 else:
-                    print('[ ]', end='')
-            if i == len(matrix) - 1:
-                print(f' Максимальное значение в области = {max_value}\n')
-            else:
-                print('')
+                    print('')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __calculate_variant_c(matrix: [[]]):
-        max_value = None
-        for i in range(0, len(matrix)):
-            for j in range(0, len(matrix[i])):
-                if j <= len(matrix) - i - 1:
-                    print('[X]', end='')
-                    if max_value is None or matrix[i][j] > max_value:
-                        max_value = matrix[i][j]
+        try:
+            max_value = None
+            for i in range(0, len(matrix)):
+                for j in range(0, len(matrix[i])):
+                    if j <= len(matrix) - i - 1:
+                        print('[X]', end='')
+                        if max_value is None or matrix[i][j] > max_value:
+                            max_value = matrix[i][j]
+                    else:
+                        print('[ ]', end='')
+                if i == len(matrix) - 1:
+                    print(f' Максимальное значение в области = {max_value}\n')
                 else:
-                    print('[ ]', end='')
-            if i == len(matrix) - 1:
-                print(f' Максимальное значение в области = {max_value}\n')
-            else:
-                print('')
+                    print('')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __calculate_variant_d(matrix: [[]]):
-        max_value = None
-        for i in range(0, len(matrix)):
-            for j in range(0, len(matrix[i])):
-                if j >= len(matrix) - i - 1:
-                    print('[X]', end='')
-                    if max_value is None or matrix[i][j] > max_value:
-                        max_value = matrix[i][j]
+        try:
+            max_value = None
+            for i in range(0, len(matrix)):
+                for j in range(0, len(matrix[i])):
+                    if j >= len(matrix) - i - 1:
+                        print('[X]', end='')
+                        if max_value is None or matrix[i][j] > max_value:
+                            max_value = matrix[i][j]
+                    else:
+                        print('[ ]', end='')
+                if i == len(matrix) - 1:
+                    print(f' Максимальное значение в области = {max_value}')
                 else:
-                    print('[ ]', end='')
-            if i == len(matrix) - 1:
-                print(f' Максимальное значение в области = {max_value}')
-            else:
-                print('')
+                    print('')
+        except Exception as e:
+            print(f'Ошибка: {e}')

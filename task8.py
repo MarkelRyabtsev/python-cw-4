@@ -1,4 +1,3 @@
-import math
 from helper import Helper
 
 
@@ -16,30 +15,70 @@ class Task8:
     def start_task(self):
         helper = Helper()
         print(f'------------------------- Задача {self.task_number} -------------------------')
-        print('Дано действительное число x, натуральное n. Вычислить: x^1/1! + ... + x^n/n!')
-        x = helper.set_real_number('x', False)
-        n = helper.set_natural_number('n')
+        print('Дана вещественная матрица размерности n * m. Сформировать вектор b, '
+              '\nв котором элементы вычисляются как:'
+              '\n- произведение элементов соответствующих строк;'
+              '\n- среднее арифметическое соответствующих столбцов;'
+              '\n- разность наибольших и наименьших элементов соответствующих строк;'
+              '\n- значения первых отрицательных элементов в столбце')
+        m = helper.set_natural_number('m (строка)')
+        n = helper.set_natural_number('n (столбец)')
+        random_matrix = helper.set_random_matrix(m, n, range(-100, 100))
+        helper.print_matrix(random_matrix)
         print('----------------------------------------------------------')
-        self.__print_formula(x, n)
-        print(f' = {self.__calculate(x, n)}')
+        print(f'Вектор из произв. элем. строк: {self.__get_product_vector(random_matrix)}')
+        print(f'Вектор из ср. арифметического столбцов: {self.__get_average_vector(random_matrix)}')
+        print(f'Вектор из разности наибольших и наименьших эл. строк: {self.__get_diff_max_min_vector(random_matrix)}')
+        print(f'Вектор из значений первых отрицательных эл. в столбце: '
+              f'{self.__get_first_negative_numbers_vector(random_matrix)}')
         print('----------------------------------------------------------')
         self.task_ended_callback(self.task_number)
 
     @staticmethod
-    def __print_formula(x: float, n: int):
-        count = 1
-        while count <= n:
-            print(f'({x}^{count}/{count}!)', end='')
-            count += 1
-            if count <= n:
-                print(' + ', end='')
+    def __get_product_vector(matrix: [[]]) -> []:
+        try:
+            vector = []
+            for row in matrix:
+                product = 1
+                for i in row:
+                    product *= i
+                vector.append(product)
+            return vector
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
-    def __calculate(x: float, n: int) -> float:
-        value = 0
-        count = 1
-        while count <= n:
-            value += math.pow(x, count)/math.factorial(count)
-            count += 1
+    def __get_average_vector(matrix: [[]]) -> []:
+        try:
+            vector = []
+            for column in range(0, len(matrix[0])):
+                sum_column = 0
+                for row in range(0, len(matrix)):
+                    sum_column += matrix[row][column]
+                vector.append(round(sum_column / len(matrix), 2))
+            return vector
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
-        return round(value, 2)
+    @staticmethod
+    def __get_diff_max_min_vector(matrix: [[]]) -> []:
+        try:
+            vector = []
+            for row in matrix:
+                vector.append(max(row) - min(row))
+            return vector
+        except Exception as e:
+            print(f'Ошибка: {e}')
+
+    @staticmethod
+    def __get_first_negative_numbers_vector(matrix: [[]]) -> []:
+        try:
+            vector = []
+            for column in range(0, len(matrix[0])):
+                for row in range(0, len(matrix)):
+                    if matrix[row][column] < 0:
+                        vector.append(matrix[row][column])
+                        break
+            return vector
+        except Exception as e:
+            print(f'Ошибка: {e}')

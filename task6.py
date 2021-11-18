@@ -38,16 +38,16 @@ class Task6:
                 if i == 0:
                     count += 1
             return count
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __get_sum_of_negative(array: []) -> int:
         try:
             negative_values = [i for i in array if i < 0]
             return sum(negative_values)
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')
 
     @staticmethod
     def __get_product_of_positive_numbers(array: []) -> int:
@@ -57,5 +57,5 @@ class Task6:
             for value in positive_values:
                 product *= value
             return product
-        except:
-            print('Ошибка')
+        except Exception as e:
+            print(f'Ошибка: {e}')
